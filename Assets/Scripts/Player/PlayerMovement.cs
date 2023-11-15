@@ -10,15 +10,18 @@ public class PlayerMovement : MonoBehaviour
     private bool isWalkingRight;
     private bool isWalkingDown;
 
+    public bool isStandingUp;
+    public bool isStandingLeft;
+    public bool isStandingRight;
+    public bool isStandingDown;
+
     Animator anim;
 
     private float horizontalMovement;
     private float verticalMovement;
 
-    private Vector2 horizontalVelocity;
-    private Vector2 verticalVelocity;
-
     [SerializeField] private float moveSpeed;
+    [SerializeField] private float magnitude;
 
     Rigidbody2D rb2d;
 
@@ -26,7 +29,8 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animator>();
-        anim.Play("PlayerIdleDown");
+        anim.Play("PlayerIdleBack");
+        SetStandingUpTrue();
         rb2d = GetComponent<Rigidbody2D>();
     }
 
@@ -36,9 +40,6 @@ public class PlayerMovement : MonoBehaviour
         verticalMovement = Input.GetAxisRaw("Vertical");
         horizontalMovement = Input.GetAxisRaw("Horizontal");
 
-        verticalVelocity = new Vector2(0, (verticalMovement * moveSpeed) * Time.deltaTime);
-        horizontalVelocity = new Vector2((horizontalMovement * moveSpeed) * Time.deltaTime, 0);
-
         if (Input.GetKeyDown(KeyCode.UpArrow) || (horizontalMovement == 0 && verticalMovement > 0))
         {
             SetUpTrue();
@@ -46,7 +47,8 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (horizontalMovement == 0 && verticalMovement == 0 && isWalkingUp && !Input.GetKey(KeyCode.UpArrow))
         {
-            ResetVariables();
+            ResetWalkVariables();
+            SetStandingUpTrue();
             anim.Play("PlayerIdleBack");
         }
         else if (Input.GetKeyDown(KeyCode.LeftArrow) || (horizontalMovement < 0 && verticalMovement == 0))
@@ -57,7 +59,8 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (horizontalMovement == 0 && verticalMovement == 0 && isWalkingLeft && !Input.GetKey(KeyCode.LeftArrow))
         {
-            ResetVariables();
+            ResetWalkVariables();
+            SetStandingLeftTrue();
             anim.Play("PlayerIdleSide");
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow) || (horizontalMovement > 0 && verticalMovement == 0))
@@ -68,7 +71,8 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (horizontalMovement == 0 && verticalMovement == 0 && isWalkingRight && !Input.GetKey(KeyCode.RightArrow))
         {
-            ResetVariables();
+            ResetWalkVariables();
+            SetStandingRightTrue();
             anim.Play("PlayerIdleSide");
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow) || (horizontalMovement == 0 && verticalMovement < 0))
@@ -78,7 +82,8 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (horizontalMovement == 0 && verticalMovement == 0 && isWalkingDown && !Input.GetKey(KeyCode.DownArrow))
         {
-            ResetVariables();
+            ResetWalkVariables();
+            SetStandingDownTrue();
             anim.Play("PlayerIdleFront");
         }
     }
@@ -87,12 +92,12 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         if (verticalMovement != 0 || horizontalMovement != 0)
-            rb2d.velocity = new Vector2(horizontalMovement * moveSpeed * Time.deltaTime, verticalMovement * moveSpeed * Time.deltaTime);
+            rb2d.velocity = new Vector2(horizontalMovement * moveSpeed * Time.deltaTime, verticalMovement * moveSpeed * Time.deltaTime).normalized * magnitude;
         else
             rb2d.velocity = Vector2.zero;
     }
 
-    private void ResetVariables()
+    private void ResetWalkVariables()
     {
         isWalkingUp = false;
         isWalkingLeft = false;
@@ -130,5 +135,37 @@ public class PlayerMovement : MonoBehaviour
         isWalkingLeft = false;
         isWalkingRight = false;
         isWalkingDown = true;
+    }
+
+    private void SetStandingUpTrue()
+    {
+        isStandingUp = true;
+        isStandingLeft = false;
+        isStandingRight = false;
+        isStandingDown = false;
+    }
+
+    private void SetStandingLeftTrue()
+    {
+        isStandingUp = false;
+        isStandingLeft = true;
+        isStandingRight = false;
+        isStandingDown = false;
+    }
+
+    private void SetStandingRightTrue()
+    {
+        isStandingUp = false;
+        isStandingLeft = false;
+        isStandingRight = true;
+        isStandingDown = false;
+    }
+
+    private void SetStandingDownTrue()
+    {
+        isStandingUp = false;
+        isStandingLeft = false;
+        isStandingRight = false;
+        isStandingDown = true;
     }
 }
