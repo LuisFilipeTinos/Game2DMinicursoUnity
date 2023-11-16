@@ -11,18 +11,24 @@ public class EnemyTakeDamage : MonoBehaviour
 
     CameraShake cameraShake;
 
+    Object enemyExplosionRef;
+
     private int enemyLife;
 
     // Start is called before the first frame update
     void Start()
     {
         if (this.gameObject.tag == "MoleEnemy")
-            enemyLife = 3;
+            enemyLife = 2;
+
+        if (this.gameObject.tag == "TreeEnemy")
+            enemyLife = 6;
 
         cameraShake = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraShake>();
         sr = GetComponent<SpriteRenderer>();
         whiteFlashMaterial = Resources.Load("WhiteFlash", typeof(Material)) as Material;
         defaultMaterial = sr.material;
+        enemyExplosionRef = Resources.Load("EnemyExplosion");
     }
 
     private async void OnTriggerEnter2D(Collider2D collision)
@@ -37,8 +43,8 @@ public class EnemyTakeDamage : MonoBehaviour
             }
             else
             {
-                //Instancia a explosão;
-                
+                var enemyExplosion = (GameObject)Instantiate(enemyExplosionRef);
+                enemyExplosion.transform.position = this.transform.position;
                 Destroy(this.gameObject);
             }
         }
@@ -46,8 +52,15 @@ public class EnemyTakeDamage : MonoBehaviour
 
     private async Task FlashSprite()
     {
-        sr.material = whiteFlashMaterial;
+        SetMaterial(whiteFlashMaterial);
         await Task.Delay(150);
-        sr.material = defaultMaterial;
+        SetMaterial(defaultMaterial);
     }
+
+    private void SetMaterial(Material material)
+    {
+        if (sr != null)
+            sr.material = material;
+    }
+
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class MoleMovement : MonoBehaviour
+public class EnemyMovement : MonoBehaviour
 {
     GameObject player;
     [SerializeField] private float moveSpeed;
