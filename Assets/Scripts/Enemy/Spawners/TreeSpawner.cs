@@ -21,8 +21,8 @@ public class TreeSpawner : MonoBehaviour
 
         if (time > 7)
         {
-            var mole = (GameObject)Instantiate(treePrefab);
-            mole.transform.position = this.transform.position;
+            var tree = (GameObject)Instantiate(treePrefab);
+            tree.transform.position = this.transform.position;
             time = 0;
         }
     }

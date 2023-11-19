@@ -8,6 +8,9 @@ TagManager:
   - Bullet
   - MoleEnemy
   - TreeEnemy
+  - ModifiedTreeEnemy
+  - Points
+  - Spawner
   layers:
   - Default
   - TransparentFX

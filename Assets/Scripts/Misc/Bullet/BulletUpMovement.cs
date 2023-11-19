@@ -2,23 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletUpMovement : MonoBehaviour
+public class BulletUpMovement : BulletBaseScript
 {
     Rigidbody2D rb2d;
-
-    [SerializeField] private float moveSpeed;
-    [SerializeField] private float magnitude;
-
-    private Vector2 velocityVector;
 
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
-        velocityVector = new Vector2(0, moveSpeed * Time.deltaTime);
+        Movement();
     }
 
     private void FixedUpdate()
     {
         rb2d.velocity = velocityVector.normalized * magnitude;
+    }
+
+    public override void Movement()
+    {
+        velocityVector = new Vector2(0, moveSpeed * Time.deltaTime);
     }
 }
