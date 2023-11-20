@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerDeath : MonoBehaviour
 {
     private Object explosionRef;
+    [SerializeField] private GameObject gameOverPanel;
 
     private void Start()
     {
@@ -37,6 +38,8 @@ public class PlayerDeath : MonoBehaviour
 
             foreach (var enemy in modifiedTreeEnemies)
                 Destroy(enemy.gameObject);
+
+            gameOverPanel.SetActive(true);
 
             Destroy(this.gameObject);
 
