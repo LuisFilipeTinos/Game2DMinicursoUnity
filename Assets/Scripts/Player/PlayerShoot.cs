@@ -29,11 +29,11 @@ public class PlayerShoot : MonoBehaviour
         deadEnemyCount = 0;
         timeUntilSpecialEnds = 1f;
         canPressZ = true;
-        bulletRef = Resources.Load("Bullet");
-        bulletUpRef = Resources.Load("BulletUp");
-        bulletDownRef = Resources.Load("BulletDown");
-        bulletLeftRef = Resources.Load("BulletLeft");
-        bulletRightRef = Resources.Load("BulletRight");
+        bulletRef = Resources.Load("Arrow");
+        bulletUpRef = Resources.Load("ArrowUp");
+        bulletDownRef = Resources.Load("ArrowDown");
+        bulletLeftRef = Resources.Load("ArrowLeft");
+        bulletRightRef = Resources.Load("ArrowRight");
     }
 
     // Update is called once per frame
@@ -87,7 +87,7 @@ public class PlayerShoot : MonoBehaviour
 
     private async Task WaitToShootAgain()
     {
-        await Task.Delay(150);
+        await Task.Delay(250);
         canPressZ = true;
     }
 
