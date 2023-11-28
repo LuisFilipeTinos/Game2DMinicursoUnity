@@ -36,22 +36,22 @@ public class BulletMovement : BulletBaseScript
         else if (playerMovement.isStandingUp)
         {
             velocityVector = new Vector2(0, moveSpeed * Time.deltaTime);
-            this.transform.eulerAngles = new Vector3(0, 0, 0);
+            this.transform.eulerAngles = new Vector3(0, 0, 0); //Não muda nada
         }
         else if (playerMovement.isStandingDown)
         {
             velocityVector = new Vector2(0, -moveSpeed * Time.deltaTime);
-            this.transform.eulerAngles = new Vector3(0, 0, 180);
+            this.transform.eulerAngles = new Vector3(0, 0, 180); //Rotaciona 180º
         }
         else if (playerMovement.isStandingLeft)
         {
             velocityVector = new Vector2(-moveSpeed * Time.deltaTime, 0);
-            this.transform.eulerAngles = new Vector3(0, 0, 90);
+            this.transform.eulerAngles = new Vector3(0, 0, 90); //Rotaciona 90º
         }
         else if (playerMovement.isStandingRight)
         {
             velocityVector = new Vector2(moveSpeed * Time.deltaTime, 0);
-            this.transform.eulerAngles = new Vector3(0, 0, -90);
+            this.transform.eulerAngles = new Vector3(0, 0, -90); //Rotaciona -90º
         }
             
     }
